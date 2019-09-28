@@ -28,6 +28,7 @@ class GHRequest(urllib.Request):
     def __init__(self, url, **headers):
 
         url = f'https://{self.DOMAIN}{url}'
+        headers['ref'] = STATE['branch']
         data = None
         method = 'GET'
 
@@ -48,7 +49,7 @@ class GHRequest(urllib.Request):
             token_auth = f'token {STATE.get("token")}'
             headers['Authorization'] = token_auth
 
-        print(url, data, method, headers)
+        #print(url, data, method, headers)
         super(GHRequest, self).__init__(
                 url,
                 data=data,
