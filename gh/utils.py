@@ -14,8 +14,11 @@ def register_state(**kwargs):
 
 class GHError(ValueError):
     def __init__(self, op, err):
-        msg = f'{STATE.get("username")}/{STATE.get("repo")}@{STATE.get("branch")} ' \
-            + f'{op} returned {err.code}: {err.reason}'
+        msg = f'{STATE.get("username")}/{STATE.get("repo")}@{STATE.get("branch")} '
+        if type(err) == str:
+            msg += f'{op}: {err}'
+        else:
+            msg += f'{op} returned {err.code}: {err.reason}'
         super(GHError, self).__init__(msg)
 
 class GHRequest(urllib.Request):
@@ -32,6 +35,8 @@ class GHRequest(urllib.Request):
             method = 'POST'
             headers['Content-Type'] = 'application/json'
             data = json.dumps(headers.pop('data')).encode()
+        if 'method' in headers.keys():
+            method = headers.pop('method')
         if STATE.get('token') is None:
             if STATE.get('password') is None:
                 STATE['password'] = getpass.getpass(f'{STATE.get("username")} password: ')
@@ -64,6 +69,12 @@ def call(url, **kwargs):
         return None, json.load(res)
     except urllib.HTTPError as e:
         return e, None
+
+def get_repo():
+    return STATE['repo']
+
+def get_username():
+    return STATE['username']
 
 def repo_exists():
     err, _ = call(f'/repos/{STATE.get("username")}/{STATE.get("repo")}')

@@ -4,6 +4,7 @@ import os
 import utils
 import cat
 import ls
+import mv
 import rm
 import touch
 import tree
@@ -11,7 +12,7 @@ import tree
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['cat', 'ls', 'rm', 'touch', 'tree'])
+    parser.add_argument('command', choices=['cat', 'ls', 'mv', 'rm', 'touch', 'tree'])
     parser.add_argument('-u', '--username', default='keggsmurph21')
     parser.add_argument('repo')
     parser.add_argument('-b', '--branch', default='master')
@@ -32,6 +33,7 @@ if __name__ == '__main__':
     commands = dict(
             cat=cat,
             ls=ls,
+            mv=mv,
             rm=rm,
             touch=touch,
             tree=tree

@@ -11,7 +11,7 @@ def main(args):
         'private': args.is_private
     }
 
-    err, _ = utils.call(f'/user/repos', data=data)
+    err, _ = utils.call('/user/repos', data=data)
     if err:
         raise utils.GHError('repo-create', err)
 
