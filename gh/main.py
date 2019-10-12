@@ -11,7 +11,7 @@ import tree
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser('gh')
     parser.add_argument('command', choices=['cat', 'ls', 'mv', 'rm', 'touch', 'tree'])
     parser.add_argument('-u', '--username', default='keggsmurph21')
     parser.add_argument('repo')
